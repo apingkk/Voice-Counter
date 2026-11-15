@@ -3,11 +3,17 @@ title = VoiceCounter
 package.name = voicecounter
 package.domain = org.voice.counter
 source.dir = .
-source.include_exts = py
-requirements = python3,kivy,vosk,android
-android.permissions = RECORD_AUDIO
+source.include_exts = py,png,jpg,kv,atlas
+source.include_dirs = model
+version = 0.1
+
+requirements = python3,kivy,vosk,pyaudio
+android.permissions = RECORD_AUDIO,INTERNET
 android.api = 33
 android.ndk = 25b
 android.sdk = 24
-android.accept_sdk_license = True
-android.add_assets =
+android.ndk_api = 21
+
+orientation = portrait
+fullscreen = 0
+log_level = 2
