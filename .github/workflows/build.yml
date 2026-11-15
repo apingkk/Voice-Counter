@@ -8,21 +8,24 @@ jobs:
   build-apk:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
+      - name: 拉取源码
         uses: actions/checkout@v4
 
-      - name: Download Vosk cn small model
+      - name: 安装依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip wget
+
+      - name: 下载vosk中文模型
         run: |
           wget https://alphacephei.com/vosk/models/vosk-model-small-cn-0.22.zip
           unzip vosk-model-small-cn-0.22.zip
+          mv vosk-model-small-cn-0.22 model
 
-      - name: Buildozer build
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          command: buildozer android debug
+      - name: 安装python、buildozer
+        run: |
+          pip install --upgrade pip buildozer
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: VoiceCounter-APK
-          path: bin/*.apk
+      - name: 开始打包
+        run: |
+          buildozer android debug deploy run
